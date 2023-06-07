@@ -72,11 +72,17 @@ class UserService {
                 message: "User not authorized"
             }
         }
-        const user = await UserModel.findOne(userData.id);
+
+        const user = await UserModel.findOne({
+            where: {
+                id: userData.id
+            }
+        });
         const userDto = new UserDto(user);
-        const tokens = TokenService.generateTokens({...userDto});
+        const tokens = await TokenService.generateTokens({...userDto});
 
         await TokenService.saveToken(userDto.id, tokens.refreshToken);
+
         return {...tokens, user: userDto}
     }
 }
