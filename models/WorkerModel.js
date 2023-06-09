@@ -1,4 +1,4 @@
-import sequelize from '../database';
+import sequelize from '../database.js';
 import {DataTypes} from 'sequelize';
 
 export const WorkerModel = sequelize.define('workers', {
@@ -6,7 +6,6 @@ export const WorkerModel = sequelize.define('workers', {
         type: DataTypes.BIGINT,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
     },
     name: {
         type: DataTypes.STRING,
@@ -33,8 +32,3 @@ export const WorkerModel = sequelize.define('workers', {
         type: DataTypes.DATE
     }
 });
-
-
-// WorkerModel.hasMany(ProjectModel, {
-//     onDelete: 'CASCADE',
-// });

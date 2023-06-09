@@ -1,4 +1,4 @@
-import sequelize from '../database';
+import sequelize from "../database.js"
 import {DataTypes} from 'sequelize';
 
 export const ProjectModel = sequelize.define('projects', {
@@ -29,11 +29,4 @@ export const ProjectModel = sequelize.define('projects', {
         type: DataTypes.DATE
     }
 });
-
-//
-// ProjectModel.belongsTo(UserModel, {
-//     onDelete: 'CASCADE',
-// });
-//
-//
 

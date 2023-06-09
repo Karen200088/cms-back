@@ -1,4 +1,4 @@
-import sequelize from '../database';
+import sequelize from '../database.js';
 import {DataTypes} from 'sequelize';
 
 export const UserModel = sequelize.define('users', {

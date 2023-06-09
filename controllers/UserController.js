@@ -1,7 +1,7 @@
-import userService from "../service/UserService";
+import userService from "../service/UserService.js";
 import {validationResult} from "express-validator";
 import {UserModel} from "../models/UserModel.js";
-import UserDto from "../dtos/UserDto";
+import UserDto from "../dtos/UserDto.js";
 
 class UserController {
 
@@ -9,7 +9,7 @@ class UserController {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                res.status(403).json(errors?.errors);
+                return res.status(403).json(errors?.errors);
             }
 
             const {email, password} = req.body;

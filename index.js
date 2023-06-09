@@ -2,11 +2,13 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
-import sequelize from "./database";
-import {ProjectModel} from "./models/ProjectModel";
-import {UserModel} from "./models/UserModel";
-import {WorkerModel} from "./models/WorkerModel";
-import userRouter from "./routes/UserRoutes";
+import sequelize from "./database.js";
+import userRouter from "./routes/UserRoutes.js";
+import workerRouter from "./routes/WorkerRoutes.js";
+import {UserModel} from "./models/UserModel.js";
+import {ProjectModel} from "./models/ProjectModel.js";
+import {WorkerModel} from "./models/WorkerModel.js";
+// import Worker_Project from "./models/WorkerProjectModel.js";
 
 dotenv.config();
 
@@ -16,14 +18,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use('/api', userRouter);
+app.use('/api', workerRouter);
 
 
 const startServer = async () => {
     try {
 
-        // const results = await UserModel.findAll();
-
-        // await sequelize.sync({force: true})
+        // await sequelize.sync({force: true});
 
         await sequelize.authenticate().then(() => {
             console.log('Connection has been established successfully.');
@@ -39,4 +40,5 @@ const startServer = async () => {
     }
 }
 
-startServer();
+await startServer();
+

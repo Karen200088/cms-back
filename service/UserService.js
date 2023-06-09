@@ -1,7 +1,7 @@
-import {UserModel} from "../models/UserModel";
-import bcrypt from "bcrypt";
-import UserDto from "../dtos/UserDto";
-import TokenService from "./TokenService";
+import bcrypt from "bcryptjs";
+import UserDto from "../dtos/UserDto.js";
+import {UserModel} from "../models/UserModel.js";
+import TokenService from "./TokenService.js";
 
 class UserService {
 
@@ -54,7 +54,6 @@ class UserService {
     }
 
     async logout(refreshToken) {
-
         return await TokenService.removeToken(refreshToken);
     }
 

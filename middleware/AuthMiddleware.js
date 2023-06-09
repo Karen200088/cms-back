@@ -1,4 +1,4 @@
-import TokenService from "../service/TokenService";
+import TokenService from "../service/TokenService.js";
 
 const authMiddleware = (req, res, next) => {
     try {
