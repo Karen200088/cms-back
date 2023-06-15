@@ -5,10 +5,16 @@ import dotenv from 'dotenv';
 import sequelize from "./database.js";
 import userRouter from "./routes/UserRoutes.js";
 import workerRouter from "./routes/WorkerRoutes.js";
+const swaggerDocument = await import("./swagger.json", {
+    assert: {
+        type: "json"
+    }
+});
+import swaggerUi from "swagger-ui-express";
 import {UserModel} from "./models/UserModel.js";
 import {ProjectModel} from "./models/ProjectModel.js";
 import {WorkerModel} from "./models/WorkerModel.js";
-// import Worker_Project from "./models/WorkerProjectModel.js";
+// import Worker_Project from "./models/index.js";
 
 dotenv.config();
 
@@ -19,6 +25,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use('/api', userRouter);
 app.use('/api', workerRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 const startServer = async () => {
@@ -34,7 +41,7 @@ const startServer = async () => {
 
         app.listen(process.env.PORT || 5001, () => {
             console.log(`app started on port ${process.env.PORT || 5001}`)
-        })
+        });
     } catch (error) {
         console.log(error);
     }
