@@ -12,6 +12,8 @@ export const WorkerModel = sequelize.define('workers', {
     },
     email: {
         type: DataTypes.STRING,
+        unique: true,
+        validate: { isEmail: true },
     },
     projectsCount: {
         type: DataTypes.INTEGER,
