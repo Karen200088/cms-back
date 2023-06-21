@@ -1,11 +1,11 @@
 class UserDto {
-    email;
-    id;
+  email;
+  id;
 
-    constructor(model) {
-        this.id = model.id;
-        this.email = model.email;
-    }
+  constructor(model) {
+    this.id = model.id;
+    this.email = model.email;
+  }
 }
 
 export default UserDto;

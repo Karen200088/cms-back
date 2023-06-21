@@ -1,22 +1,22 @@
 class ApiDataHandler {
 
-    status;
-    message;
-    data;
+  status;
+  message;
+  data;
 
-    constructor(status, message, data) {
-        this.status = status;
-        this.data = data;
-        this.message = message;
-    }
+  constructor(status, message, data) {
+    this.status = status;
+    this.data = data;
+    this.message = message;
+  }
 
-    emptyData(message) {
-        return new ApiDataHandler(200, message, [])
-    }
+  emptyData(message) {
+    return new ApiDataHandler(200, message, [])
+  }
 
-    successRequest(status, message, data = []) {
-        return new ApiDataHandler(status, message, data);
-    }
+  successRequest(status, message, data = []) {
+    return new ApiDataHandler(status, message, data);
+  }
 
 
 }
