@@ -6,9 +6,14 @@ class WorkerController {
 
     async getWorkers(req, res) {
         try {
-            const workers = await WorkerModel.findAll();
+            let {page, limit} = req.query;
+            page = page || 1
+            limit = limit || 10
+            let offset = page * limit - limit
 
-            if (workers.length) {
+            const workers = await WorkerModel.findAndCountAll({limit, offset});
+
+            if (workers) {
                 return res.status(200).json(ApiDataHandler.successRequest(200, "Success get workers", workers));
             }
             return res.status(200).json(ApiDataHandler.emptyData('No workers'));

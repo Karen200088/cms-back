@@ -6,10 +6,15 @@ class ProjectController {
 
   async getProjects(req, res) {
     try {
-      const projects = await ProjectModel.findAll();
+      let {page, limit} = req.query;
+      page = page || 1
+      limit = limit || 10
+      let offset = page * limit - limit
 
-      if (projects.length) {
-        return res.status(200).json(ApiDataHandler.successRequest(200, "Success get Projects", Projects));
+      const projects = await ProjectModel.findAndCountAll({limit, offset});
+
+      if (projects) {
+        return res.status(200).json(ApiDataHandler.successRequest(200, "Success get Projects", projects));
       }
       return res.status(200).json(ApiDataHandler.emptyData('No Projects'));
     } catch (error) {
