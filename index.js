@@ -46,6 +46,15 @@ const startServer = async () => {
 
     // await sequelize.sync({force: true});
 
+    console.log(process.env.PORT);
+    console.log(process.env.DB_NAME);
+    console.log(process.env.DB_USER);
+    console.log(process.env.DB_PASSWORD);
+    console.log(process.env.DB_HOST);
+    console.log(process.env.DB_PORT);
+    console.log(process.env.JWT_ACCESS_TOKEN_SECRET_KEY);
+    console.log(process.env.JWT_REFRESH_TOKEN_SECRET_KEY);
+
     await sequelize.authenticate().then(() => {
       console.log('Connection has been established successfully.');
     }).catch((error) => {
