@@ -3,15 +3,17 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
 import sequelize from "./database.js";
-import userRouter from "./routes/UserRoutes.js";
-import projectRouter from "./routes/projectRoutes.js";
-import workerRouter from "./routes/WorkerRoutes.js";
-
 import swaggerUi from "swagger-ui-express";
-const swaggerDocument = await import("./swagger.json", {assert: {type: "json"}});
+
+// const swaggerDocument = await import("./swagger.json", {assert: {type: "json"}});
+
 import {UserModel} from "./models/UserModel.js";
 import {ProjectModel} from "./models/ProjectModel.js";
 import {WorkerModel} from "./models/WorkerModel.js";
+import userRouter from "./routes/UserRoutes.js";
+import projectRouter from "./routes/ProjectRoutes.js";
+import workerRouter from "./routes/WorkerRoutes.js";
+import ApiErrorHandler from "./helpers/ApiErrorHandler.js";
 // import Worker_Project from "./models/index.js";
 
 dotenv.config();
@@ -20,7 +22,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
 app.use('/api', userRouter);
 app.use('/api', projectRouter);
 app.use('/api', workerRouter);
@@ -29,6 +31,18 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const startServer = async () => {
   try {
+
+    // await pool.connect();
+    //
+    // await pool.query('SELECT NOW()', (error, res) => {
+    //   if (res) {
+    //     console.log('Connection has been established successfully.');
+    //   } else {
+    //     console.error('Unable to connect to the database: ', error);
+    //   }
+    //   pool.end()
+    // });
+
 
     // await sequelize.sync({force: true});
 
@@ -42,9 +56,9 @@ const startServer = async () => {
       console.log(`app started on port ${process.env.PORT || 5001}`)
     });
   } catch (error) {
-    console.log(error);
+    return ApiErrorHandler.badRequest(404, "Something went wrong");
   }
 }
 
-await startServer();
+startServer();
 
