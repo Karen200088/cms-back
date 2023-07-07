@@ -25,8 +25,8 @@ app.use(cookieParser());
 app.use(cors({credentials: true, origin: true}));
 // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', userRouter);
-app.use('/api', projectRouter);
 app.use('/api', workerRouter);
+app.use('/api', projectRouter);
 
 
 const startServer = async () => {
