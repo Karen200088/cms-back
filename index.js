@@ -44,7 +44,7 @@ const startServer = async () => {
     // });
 
 
-    // await sequelize.sync({force: true});
+    await sequelize.sync({force: true});
 
     console.log(process.env.PORT);
     console.log(process.env.DB_NAME);
