@@ -4,7 +4,7 @@ import ApiErrorHandler from "../helpers/ApiErrorHandler.js";
 
 class ProjectController {
 
-  async getProjects(req, res) {
+  async getProjects(req, res, next) {
     try {
       let {page, limit} = req.query;
       page = page || 1
@@ -19,10 +19,11 @@ class ProjectController {
       return res.status(200).json(ApiDataHandler.emptyData('No Projects'));
     } catch (error) {
       console.log(error);
+      next();
     }
   }
 
-  async getOneProject(req, res) {
+  async getOneProject(req, res, next) {
     try {
       const projectId = req.params.id;
       const project = await ProjectModel.findOne({where: {id: projectId}});
@@ -33,10 +34,11 @@ class ProjectController {
       return res.status(200).json(ApiDataHandler.emptyData('No Project'));
     } catch (error) {
       console.log(error);
+      next();
     }
   }
 
-  async createProject(req, res) {
+  async createProject(req, res, next) {
     try {
       const {email, name} = req.body;
       const projectCandidate = await ProjectModel.findOne({where: {email: email}});
@@ -50,27 +52,25 @@ class ProjectController {
       if (project && name) {
         return res.status(201).json(ApiDataHandler.successRequest(201, "Success create Project", Project))
       } else {
-        res.json({
-          message: "problem"
-        });
+        return ApiErrorHandler.badRequest(404, "Something went wrong");
       }
 
     } catch (error) {
-      return res.json({
-        message: error
-      })
+      console.log(error);
+      next();
     }
   }
 
-  async updateProject(req, res) {
+  async updateProject(req, res, next) {
     try {
 
     } catch (error) {
       console.log(error);
+      next();
     }
   }
 
-  async deleteProject(req, res) {
+  async deleteProject(req, res, next) {
     try {
       const projectId = req.params.id;
       const deleteProject = await ProjectModel.destroy({where: {id: projectId}});
@@ -84,6 +84,7 @@ class ProjectController {
       return res.status(400).json(ApiErrorHandler.badRequest(400, "No Project with this id"))
     } catch (error) {
       console.log(error);
+      next();
     }
   }
 }
