@@ -10,6 +10,6 @@ userRouter.post("/registration",
   , userController.registration);
 userRouter.post("/login", userController.login);
 userRouter.post("/logout", userController.logout);
-userRouter.post("/refresh", userController.refreshToken);
+userRouter.get("/refresh", userController.refreshToken);
 
 export default userRouter;
