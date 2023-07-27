@@ -7,7 +7,7 @@ import sequelize from "./database.js";
 
 import swaggerUi from "swagger-ui-express";
 const swaggerDocument = YAML.load('./swagger.yaml');
-// https://editor.swagger.io/
+
 
 import userRouter from "./routes/UserRoutes.js";
 import projectRouter from "./routes/ProjectRoutes.js";
@@ -46,7 +46,7 @@ const startServer = async () => {
     // });
 
 
-    // await sequelize.sync({force: true});
+    await sequelize.sync({force: true});
 
     await sequelize.authenticate().then(() => {
       console.log('Connection has been established successfully.');

@@ -6,7 +6,7 @@ import ApiErrorHandler from "../helpers/ApiErrorHandler.js";
 
 class UserService {
 
-  async registration(email, password) {
+  async registration(email, password, firstName, lastName) {
     try {
       const candidate = await UserModel.findOne({where: {email: email}});
       if (candidate !== null) {
@@ -15,7 +15,9 @@ class UserService {
       const hashPassword = await bcrypt.hash(password, 4);
       const user = await UserModel.create({
         email,
-        password: hashPassword
+        password: hashPassword,
+        firstName,
+        lastName
       });
 
       const userDto = new UserDto(user);

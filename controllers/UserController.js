@@ -1,5 +1,6 @@
 import userService from "../service/UserService.js";
 import {validationResult} from "express-validator";
+import ApiDataHandler from "../helpers/ApiDataHandler.js";
 
 class UserController {
 
@@ -10,8 +11,8 @@ class UserController {
         return res.status(403).json(errors?.errors);
       }
 
-      const {email, password} = req.body;
-      const userData = await userService.registration(email, password);
+      const {email, password, firstName, lastName} = req.body;
+      const userData = await userService.registration(email, password, firstName, lastName);
       res.cookie('refreshToken', userData.refreshToken, {maxAge: 60 * 24 * 60 * 60 * 1000, httpOnly: true});
       return res.json(userData);
     } catch (error) {
@@ -41,10 +42,10 @@ class UserController {
         const userData = await userService.logout(refreshToken);
         if (userData) {
           res.clearCookie('refreshToken');
-          res.json({message: "You have been successfully logged out!"});
+          return res.status(200).json(ApiDataHandler.successRequest(200, "You have been successfully logged out!"));
         }
       } else {
-        res.json({message: "You are already logged out!"});
+        return res.status(201).json(ApiDataHandler.successRequest(201, "You are already logged out!"));
       }
     } catch (error) {
       console.log(error);
