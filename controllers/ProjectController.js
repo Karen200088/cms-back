@@ -1,6 +1,7 @@
 import {ProjectModel} from "../models/ProjectModel.js";
 import ApiDataHandler from "../helpers/ApiDataHandler.js";
 import ApiErrorHandler from "../helpers/ApiErrorHandler.js";
+import {WorkerModel} from "../models/WorkerModel.js";
 
 class ProjectController {
 
@@ -26,7 +27,10 @@ class ProjectController {
   async getOneProject(req, res, next) {
     try {
       const projectId = req.params.id;
-      const project = await ProjectModel.findOne({where: {id: projectId}});
+      const project = await ProjectModel.findOne({
+        where: {id: projectId},
+        include: WorkerModel
+      });
 
       if (project) {
         return res.status(200).json(ApiDataHandler.successRequest(200, "Success get Project", Project));

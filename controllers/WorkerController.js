@@ -1,6 +1,7 @@
 import {WorkerModel} from "../models/WorkerModel.js";
 import ApiDataHandler from "../helpers/ApiDataHandler.js";
 import ApiErrorHandler from "../helpers/ApiErrorHandler.js";
+import {ProjectModel} from "../models/ProjectModel.js";
 
 class WorkerController {
 
@@ -26,7 +27,10 @@ class WorkerController {
   async getOneWorker(req, res, next) {
     try {
       const workerId = req.params.id;
-      const worker = await WorkerModel.findOne({where: {id: workerId}});
+      const worker = await WorkerModel.findOne({
+        where: {id: workerId},
+        include: ProjectModel
+      });
 
       if (worker) {
         return res.status(200).json(ApiDataHandler.successRequest(200, "Success get worker", worker));

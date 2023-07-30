@@ -15,7 +15,7 @@ import workerRouter from "./routes/WorkerRoutes.js";
 import {UserModel} from "./models/UserModel.js";
 import {ProjectModel} from "./models/ProjectModel.js";
 import {WorkerModel} from "./models/WorkerModel.js";
-// import Worker_Project from "./models/index.js";
+import Worker_Project from "./models/index.js";
 import ApiErrorHandler from "./helpers/ApiErrorHandler.js";
 
 dotenv.config();
@@ -25,26 +25,14 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({credentials: true, origin: true}));
+
 app.use('/api', userRouter);
 app.use('/api', workerRouter);
 app.use('/api', projectRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
 const startServer = async () => {
   try {
-
-    // await pool.connect();
-    //
-    // await pool.query('SELECT NOW()', (error, res) => {
-    //   if (res) {
-    //     console.log('Connection has been established successfully.');
-    //   } else {
-    //     console.error('Unable to connect to the database: ', error);
-    //   }
-    //   pool.end()
-    // });
-
 
     await sequelize.sync({force: true});
 
