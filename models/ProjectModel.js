@@ -29,4 +29,3 @@ export const ProjectModel = sequelize.define('projects', {
     type: DataTypes.DATE
   }
 });
-

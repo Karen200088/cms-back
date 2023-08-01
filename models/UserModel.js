@@ -8,10 +8,10 @@ export const UserModel = sequelize.define('users', {
     autoIncrement: true,
     allowNull: false,
   },
-  firstname: {
+  firstName: {
     type: DataTypes.STRING(100),
   },
-  lastname: {
+  lastName: {
     type: DataTypes.STRING(100),
   },
   email: {

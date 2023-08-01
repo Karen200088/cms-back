@@ -8,8 +8,7 @@ const Worker_Project = sequelize.define('workers_project', {
     type: DataTypes.BIGINT,
     primaryKey: true,
     autoIncrement: true,
-    timestamps: false
-  }
+  },
 });
 
 WorkerModel.belongsToMany(ProjectModel, {
