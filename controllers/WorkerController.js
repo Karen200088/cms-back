@@ -1,3 +1,4 @@
+import {Op} from "sequelize";
 import {WorkerModel} from "../models/WorkerModel.js";
 import ApiDataHandler from "../helpers/ApiDataHandler.js";
 import ApiErrorHandler from "../helpers/ApiErrorHandler.js";
@@ -12,9 +13,13 @@ class WorkerController {
       limit = limit || 10
       let offset = page * limit - limit
 
-      const workers = await WorkerModel.findAndCountAll({limit, offset});
+      const workers = await WorkerModel.findAndCountAll({
+        limit,
+        offset,
+        include: ProjectModel
+      });
 
-      if (workers) {
+      if (workers.count) {
         return res.status(200).json(ApiDataHandler.successRequest(200, "Success get workers", workers));
       }
       return res.status(200).json(ApiDataHandler.emptyData('No workers'));
@@ -27,6 +32,7 @@ class WorkerController {
   async getOneWorker(req, res, next) {
     try {
       const workerId = req.params.id;
+
       const worker = await WorkerModel.findOne({
         where: {id: workerId},
         include: ProjectModel
@@ -36,6 +42,31 @@ class WorkerController {
         return res.status(200).json(ApiDataHandler.successRequest(200, "Success get worker", worker));
       }
       return res.status(200).json(ApiDataHandler.emptyData('No worker'));
+    } catch (error) {
+      console.log(error);
+      next();
+    }
+  }
+
+  async searchWorkers(req, res, next) {
+    try {
+
+      const search = req.query.search;
+
+      const workers = await WorkerModel.findAndCountAll({
+        where: {
+          [Op.or]: [
+            {firstName: {[Op.like]: `%${search}%`}},
+            {lastName: {[Op.like]: `%${search}%`}}
+          ],
+        },
+        include: ProjectModel
+      });
+
+      if (workers.count) {
+        return res.status(200).json(ApiDataHandler.successRequest(200, "Success get worker", workers));
+      }
+      return res.status(200).json(ApiDataHandler.emptyData('No found workers'));
     } catch (error) {
       console.log(error);
       next();

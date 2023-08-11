@@ -2,7 +2,7 @@ class UserDto {
   id;
   email;
   firstName;
-  lastname;
+  lastName;
 
   constructor(model) {
     this.id = model.id;

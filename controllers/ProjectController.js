@@ -1,3 +1,4 @@
+import {Op} from "sequelize";
 import {ProjectModel} from "../models/ProjectModel.js";
 import ApiDataHandler from "../helpers/ApiDataHandler.js";
 import ApiErrorHandler from "../helpers/ApiErrorHandler.js";
@@ -12,9 +13,13 @@ class ProjectController {
       limit = limit || 10
       let offset = page * limit - limit
 
-      const projects = await ProjectModel.findAndCountAll({limit, offset});
+      const projects = await ProjectModel.findAndCountAll({
+        limit,
+        offset,
+        include: WorkerModel
+      });
 
-      if (projects) {
+      if (projects.count) {
         return res.status(200).json(ApiDataHandler.successRequest(200, "Success get Projects", projects));
       }
       return res.status(200).json(ApiDataHandler.emptyData('No Projects'));
@@ -36,6 +41,30 @@ class ProjectController {
         return res.status(200).json(ApiDataHandler.successRequest(200, "Success get Project", Project));
       }
       return res.status(200).json(ApiDataHandler.emptyData('No Project'));
+    } catch (error) {
+      console.log(error);
+      next();
+    }
+  }
+
+  async searchProject(req, res, next) {
+    try {
+
+      const search = req.query.search;
+
+      const projects = await ProjectModel.findAndCountAll({
+        where: {
+          projectName: {
+            [Op.like]: `%${search}%`
+          }
+        },
+        include: WorkerModel
+      });
+
+      if (projects.count) {
+        return res.status(200).json(ApiDataHandler.successRequest(200, "Success get projects", projects));
+      }
+      return res.status(200).json(ApiDataHandler.emptyData('No found projects'));
     } catch (error) {
       console.log(error);
       next();

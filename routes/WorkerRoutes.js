@@ -6,6 +6,7 @@ const workerRouter = new Router();
 
 workerRouter.get("/worker", authMiddleware, workerController.getWorkers);
 workerRouter.get("/worker/:id", authMiddleware, workerController.getOneWorker);
+workerRouter.get("/worker/search", authMiddleware, workerController.searchWorkers);
 workerRouter.post("/worker", authMiddleware, workerController.createWorker);
 workerRouter.put("/worker", authMiddleware, workerController.updateWorker);
 workerRouter.delete("/worker/:id", authMiddleware, workerController.deleteWorker);
