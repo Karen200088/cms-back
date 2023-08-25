@@ -73,17 +73,16 @@ class ProjectController {
 
   async createProject(req, res, next) {
     try {
-      const {email, name} = req.body;
-      const projectCandidate = await ProjectModel.findOne({where: {email: email}});
+      const {projectName, projectStatus = "in progress", projectPrice, taxPercent, officePercent} = req.body;
+      const projectCandidate = await ProjectModel.findOne({where: {projectName: projectName}});
 
       if (projectCandidate !== null) {
-        return res.status(409).json(ApiErrorHandler.badRequest(409, "An Project is already registered with this email"))
+        return res.status(409).json(ApiErrorHandler.badRequest(409, "An Project is already registered with this name"))
       }
-      const project = await ProjectModel.create({email, name});
+      const project = await ProjectModel.create({projectName, projectStatus, projectPrice, taxPercent, officePercent});
 
-
-      if (project && name) {
-        return res.status(201).json(ApiDataHandler.successRequest(201, "Success create Project", Project))
+      if (projectName) {
+        return res.status(201).json(ApiDataHandler.successRequest(201, "Success create Project", project))
       } else {
         return ApiErrorHandler.badRequest(404, "Something went wrong");
       }

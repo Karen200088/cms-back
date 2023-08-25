@@ -18,6 +18,14 @@ export const ProjectModel = sequelize.define('projects', {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  taxPercent: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  officePercent: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
   createdAt: {
     allowNull: false,
     defaultValue: new Date(),
