@@ -8,14 +8,13 @@ import sequelize from "./database.js";
 import swaggerUi from "swagger-ui-express";
 const swaggerDocument = YAML.load('./swagger.yaml');
 
-
 import userRouter from "./routes/UserRoutes.js";
 import projectRouter from "./routes/ProjectRoutes.js";
 import workerRouter from "./routes/WorkerRoutes.js";
 import {UserModel} from "./models/UserModel.js";
 import {ProjectModel} from "./models/ProjectModel.js";
 import {WorkerModel} from "./models/WorkerModel.js";
-import Worker_Project from "./models/index.js";
+import {Worker_Project} from "./models/index.js";
 import ApiErrorHandler from "./helpers/ApiErrorHandler.js";
 
 dotenv.config();
@@ -32,9 +31,10 @@ app.use('/api', projectRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const startServer = async () => {
+
   try {
 
-    await sequelize.sync({force: true});
+    // await sequelize.sync({force: true});
 
     await sequelize.authenticate().then(() => {
       console.log('Connection has been established successfully.');

@@ -5,7 +5,7 @@ class TokenService {
 
   async generateTokens(payload) {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_TOKEN_SECRET_KEY, {
-      expiresIn: "30m"
+      expiresIn: "30d"
     });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_TOKEN_SECRET_KEY, {
       expiresIn: "60d"

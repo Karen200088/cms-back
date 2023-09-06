@@ -3,7 +3,7 @@ import {DataTypes} from "sequelize";
 import {ProjectModel} from "./ProjectModel.js";
 import {WorkerModel} from "./WorkerModel.js";
 
-const Worker_Project = sequelize.define('workers_project', {
+export const Worker_Project = sequelize.define('workers_project', {
   id: {
     type: DataTypes.BIGINT,
     primaryKey: true,
@@ -20,5 +20,3 @@ ProjectModel.belongsToMany(WorkerModel, {
   through: "workers_projects",
   foreignKey: "workerId",
 });
-
-export default Worker_Project;

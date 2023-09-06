@@ -1,8 +1,8 @@
 import {Op} from "sequelize";
 import {WorkerModel} from "../models/WorkerModel.js";
+import {ProjectModel} from "../models/ProjectModel.js";
 import ApiDataHandler from "../helpers/ApiDataHandler.js";
 import ApiErrorHandler from "../helpers/ApiErrorHandler.js";
-import {ProjectModel} from "../models/ProjectModel.js";
 
 class WorkerController {
 

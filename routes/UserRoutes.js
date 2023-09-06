@@ -1,6 +1,6 @@
 import Router from "express";
+import {body} from "express-validator";
 import userController from "../controllers/UserController.js";
-import {body} from "express-validator"
 
 const userRouter = new Router();
 
