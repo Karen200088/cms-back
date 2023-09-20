@@ -18,7 +18,35 @@ export const WorkerModel = sequelize.define('workers', {
     unique: true,
     validate: {isEmail: true},
   },
-  projectsCount: {
+  mentor: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  mentorPercent: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  techInterviewer: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  techInterviewerPercent: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  caller: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  callerPercent: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  hrManager: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  hrManagerPercent: {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
